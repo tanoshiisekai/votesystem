@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票系统</title>
+    <style>
+        #container {
+            width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #left {
+            float: left;
+            width: 650px;
+            height: 100px;
+        }
+
+        #right {
+            float: left;
+            width: 650px;
+            height: 100px;
+        }
+
+        .tips{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .button {
+            text-align: center;
+            background-color: cornflowerblue;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100px;
+            line-height: 100px;
+            color: #ffffff;
+            border-radius: 10px;
+        }
+
+        .button:hover {
+            cursor: pointer;
+        }
+
+        .titlestr{
+            width: 1000px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .littlebuttonleft{
+            float: left;
+            width: 200px;
+            height: 40px;
+            line-height: 40px;
+            background-color: forestgreen;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .littlebuttonleft:hover{
+            cursor: pointer;
+        }
+        .littlebuttonright{
+            float: right;
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            background-color: hotpink;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .littlebuttonright:hover{
+            cursor: pointer;
+        }
+        .lines{
+            height: 50px;
+            line-height: 50px;
+        }
+        #optionspanel{
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        function addoption(){
+            var ospanel = document.getElementById("optionspanel");
+            var opinput = document.getElementById("optionscount");
+            var opcount = parseInt(opinput.value);
+            opcount = opcount + 1;
+            var child_input = document.createElement("input");
+            child_input.type = "text";
+            child_input.className = "titlestr";
+            child_input.name = "totaloptions";
+            child_input.id = "option"+opcount;
+            ospanel.appendChild(child_input);
+            var child_div = document.createElement("div");
+            child_div.className = "littlebuttonright";
+            child_div.onclick = function() {
+                removeoption(opcount);
+            };
+            child_div.id = "delete"+opcount;
+            child_div.innerText = "删除";
+            ospanel.appendChild(child_div);
+            opinput.value = opcount;
+            var totalcount = document.getElementById("totaloptionscount");
+            var tcount = parseInt(totalcount.value);
+            tcount = tcount + 1;
+            totalcount.value = tcount;
+        }
+        function removeoption(optionnum){
+            var oaim1 = document.getElementById("option" + optionnum);
+            oaim1.parentNode.removeChild(oaim1);
+            var oaim2 = document.getElementById("delete" + optionnum);
+            oaim2.parentNode.removeChild(oaim2);
+            var totalcount = document.getElementById("totaloptionscount");
+            var tcount = parseInt(totalcount.value);
+            tcount = tcount - 1;
+            totalcount.value = tcount;
+        }
+        function gotovote(){
+            var titlestr = document.getElementById("votetitle").value;
+            var voteoptions = new Array();
+            var optionsdiv = document.getElementsByName("totaloptions");
+            for(var i=0;i<optionsdiv.length;i=i+1){
+                voteoptions.push(optionsdiv[i].value);
+            }
+            var typestr = "";
+            var votetype = document.getElementsByName("votetype");
+            for(var j=0;j<votetype.length;j=j+1){
+                if(votetype[j].checked){
+                    typestr = votetype[j].value;
+                }
+            }
+            window.location.href="/vote?titlestr="+titlestr+"&voteoptions="+voteoptions+"&typestr="+typestr;
+        }
+    </script>
+</head>
+<body>
+<div id="container">
+    <div class="tips">投票主题</div>
+    <input type="text" class="titlestr" id="votetitle"/>
+    <div class="tips">
+        投票选项
+    </div>
+    <div class="littlebuttonleft" onclick="addoption()">添加</div>
+    <input type="hidden" id="optionscount" value="1"/>
+    <input type="hidden" id="totaloptionscount" value="1"/>
+    <div id="optionspanel">
+        <input type="text" class="titlestr" id="option1" name="totaloptions"/>
+        <div class="littlebuttonright" onclick="removeoption(1)" id="delete1">删除</div>
+    </div>
+    <div class="tips">投票类型</div>
+    <div class="lines"><input name="votetype" type="radio" value="0"/>有记名投票</div>
+    <div class="lines"><input name="votetype" type="radio" value="1"/>无记名投票</div>
+    <div class="button" onclick="gotovote()">
+        开始投票
+    </div>
+</div>
+</body>
+</html>

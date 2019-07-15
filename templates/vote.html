@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票</title>
+    <style>
+        #titlestr{
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: left;
+            padding-left: 30px;
+        }
+        #buttonarea{
+            width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button{
+            float: left;
+            width: 300px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 10px;
+            background-color: cornflowerblue;
+            margin: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .button:hover{
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function choose(optionstr, pname){
+            document.getElementById(optionstr).style.fontSize = "42px";
+            document.getElementById(optionstr).style.backgroundColor = "hotpink";
+            setTimeout(function(){
+                window.location.href = "/nextperson?optionstr="+optionstr+"&pname="+pname;
+            }, 100);
+        }
+    </script>
+</head>
+<body>
+欢迎你，{{pname}}
+<input type="hidden" id="t_titlestr" value="{{t_titlestr}}"/>
+<input type="hidden" id="t_voteoptions" value="{{t_voteoptions}}"/>
+<input type="hidden" id="t_typestr" value="{{t_typestr}}"/>
+<div id="titlestr">{{t_titlestr}}</div>
+<div id="buttonarea">
+    {% for i in optionslist %}
+    <div class="button" id="{{i}}" onclick="choose('{{i}}', '{{pname}}')">{{i}}</div>
+    {% endfor %}
+</div>
+</body>
+</html>

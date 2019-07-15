@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票汇总</title>
+    <style>
+        body{
+            font-size: 36px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr {
+            border: 1px solid cornflowerblue;
+        }
+        
+        table td{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <th>
+    <td>选项</td>
+    <td>票数</td>
+    </th>
+    {% for x in oplist %}
+    <tr>
+        <td></td>
+        <td>{{x[0]}}</td>
+        <td>{{x[1]}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
